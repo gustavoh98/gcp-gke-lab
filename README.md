@@ -28,3 +28,12 @@ terraform apply
 - google_compute_subnetwork
 - google_container_cluster
 - google_container_node_pool
+## Site deployado no cluster
+
+Site estático servido via Nginx rodando como Pod no GKE, exposto com LoadBalancer externo.
+
+- Imagem base: `nginx:alpine`
+- Deploy via `kubectl` + ConfigMap
+- IP externo provisionado automaticamente pelo GKE
+
+![Site deployado](assets/site-inteiro.jpeg)
