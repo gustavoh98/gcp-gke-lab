@@ -8,7 +8,8 @@ resource "google_container_cluster" "primary" {
 
   remove_default_node_pool = true  # remove o node pool padrão — vou criar abaixo
   initial_node_count       = 1     # obrigatório mesmo removendo o default
-
+  deletion_protection = false # permite deletar o cluster sem precisar desabilitar proteção manualmente
+  
   # Define os ranges de IP para Pods e Services dentro do cluster
   ip_allocation_policy {
     cluster_secondary_range_name  = "pods-range"     # range secundário dos Pods
