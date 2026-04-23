@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GKE Lab — Gustavo Dutra</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0f;--bg2:#111118;--bg3:#1a1a24;--border:#ffffff12;--accent:#6366f1;--accent2:#8b5cf6;--green:#10b981;--text:#e2e8f0;--muted:#64748b}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden}
+canvas{position:fixed;top:0;left:0;z-index:0;opacity:.4}
+.content{position:relative;z-index:1}
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 4rem;border-bottom:1px solid var(--border);backdrop-filter:blur(10px);position:sticky;top:0;background:rgba(10,10,15,.8)}
+.logo{font-family:'JetBrains Mono',monospace;font-size:.9rem;color:var(--accent)}
+.nav-badge{background:var(--bg3);border:1px solid var(--border);padding:.4rem 1rem;border-radius:99px;font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:.5rem}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero{padding:8rem 4rem 6rem;max-width:1100px;margin:0 auto}
+.hero-tag{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--accent);background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);padding:.4rem 1rem;border-radius:99px;display:inline-block;margin-bottom:2rem}
+h1{font-size:4rem;font-weight:700;line-height:1.1;margin-bottom:1.5rem;letter-spacing:-2px}
+h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:1.2rem;color:var(--muted);max-width:600px;line-height:1.7;margin-bottom:3rem}
+.hero-badges{display:flex;gap:1rem;flex-wrap:wrap}
+.hbadge{background:var(--bg3);border:1px solid var(--border);padding:.5rem 1.2rem;border-radius:8px;font-size:.85rem;color:var(--text);font-family:'JetBrains Mono',monospace}
+.section{padding:4rem;max-width:1100px;margin:0 auto}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:2.5rem;display:flex;align-items:center;gap:.75rem}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-bottom:4rem}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:2rem;transition:border-color .3s,transform .3s}
+.card:hover{border-color:rgba(99,102,241,.4);transform:translateY(-4px)}
+.card-icon{width:40px;height:40px;border-radius:10px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;font-size:1.2rem}
+.card h3{font-size:1rem;font-weight:600;margin-bottom:.75rem}
+.card p{font-size:.875rem;color:var(--muted);line-height:1.6}
+.infra-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.infra-block{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:2rem}
+.infra-block h4{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--accent);margin-bottom:1.5rem;text-transform:uppercase;letter-spacing:.05em}
+.infra-row{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0;border-bottom:1px solid var(--border)}
+.infra-row:last-child{border-bottom:none}
+.infra-key{font-size:.85rem;color:var(--muted)}
+.infra-val{font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--text)}
+.tag-green{color:var(--green)}
+.stack{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem}
+.stag{background:var(--bg3);border:1px solid var(--border);padding:.5rem 1rem;border-radius:8px;font-size:.8rem;font-family:'JetBrains Mono',monospace;color:var(--text)}
+footer{border-top:1px solid var(--border);padding:2rem 4rem;display:flex;justify-content:space-between;align-items:center;margin-top:4rem}
+footer p{font-size:.85rem;color:var(--muted)}
+footer a{color:var(--accent);text-decoration:none;font-size:.85rem}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="content">
+  <nav>
+    <span class="logo">gustavo@gke-lab:~$</span>
+    <div class="nav-badge"><span class="dot"></span>cluster online · southamerica-east1-b</div>
+  </nav>
+  <div class="hero">
+    <div class="hero-tag">// kubernetes engine</div>
+    <h1>GKE cluster<br>provisionado com<br><span>Terraform</span></h1>
+    <p class="hero-sub">Infraestrutura como código na prática. Cluster Kubernetes rodando no GCP com VPC dedicada, ranges de IP customizados e node pool configurado.</p>
+    <div class="hero-badges">
+      <span class="hbadge">GCP</span>
+      <span class="hbadge">Kubernetes</span>
+      <span class="hbadge">Terraform</span>
+      <span class="hbadge">Docker</span>
+      <span class="hbadge">Nginx</span>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-label">O que foi construído</div>
+    <div class="cards">
+      <div class="card"><div class="card-icon">⎈</div><h3>GKE Cluster</h3><p>Cluster Kubernetes Standard provisionado via Terraform com control plane gerenciado pelo Google.</p></div>
+      <div class="card"><div class="card-icon">🌐</div><h3>VPC dedicada</h3><p>Rede customizada com subnet e ranges secundários para Pods e Services — isolamento total da infra.</p></div>
+      <div class="card"><div class="card-icon">🏗</div><h3>IaC com Terraform</h3><p>100% da infraestrutura versionada como código. Reproduzível, auditável e destruível com um comando.</p></div>
+      <div class="card"><div class="card-icon">🚀</div><h3>Deploy via kubectl</h3><p>Aplicação containerizada deployada no cluster com Load Balancer externo provisionado automaticamente.</p></div>
+    </div>
+    <div class="section-label">Infraestrutura</div>
+    <div class="infra-grid">
+      <div class="infra-block">
+        <h4>Cluster</h4>
+        <div class="infra-row"><span class="infra-key">Nome</span><span class="infra-val">gke-lab-cluster</span></div>
+        <div class="infra-row"><span class="infra-key">Zona</span><span class="infra-val">southamerica-east1-b</span></div>
+        <div class="infra-row"><span class="infra-key">Versão</span><span class="infra-val">1.35.1-gke</span></div>
+        <div class="infra-row"><span class="infra-key">Node</span><span class="infra-val">e2-medium</span></div>
+        <div class="infra-row"><span class="infra-key">Status</span><span class="infra-val tag-green">● Running</span></div>
+      </div>
+      <div class="infra-block">
+        <h4>Rede</h4>
+        <div class="infra-row"><span class="infra-key">VPC</span><span class="infra-val">gke-lab-vpc</span></div>
+        <div class="infra-row"><span class="infra-key">Subnet</span><span class="infra-val">10.0.0.0/24</span></div>
+        <div class="infra-row"><span class="infra-key">Pods range</span><span class="infra-val">10.48.0.0/14</span></div>
+        <div class="infra-row"><span class="infra-key">Services range</span><span class="infra-val">10.52.0.0/20</span></div>
+        <div class="infra-row"><span class="infra-key">Load Balancer</span><span class="infra-val tag-green">● Ativo</span></div>
+      </div>
+    </div>
+    <div class="section-label" style="margin-top:3rem">Stack utilizada</div>
+    <div class="stack">
+      <span class="stag">Google Cloud Platform</span>
+      <span class="stag">Kubernetes Engine</span>
+      <span class="stag">Terraform ~> 5.0</span>
+      <span class="stag">Docker</span>
+      <span class="stag">Nginx</span>
+      <span class="stag">kubectl</span>
+      <span class="stag">gcloud CLI</span>
+      <span class="stag">Artifact Registry</span>
+    </div>
+  </div>
+  <footer>
+    <p>Gustavo Dutra · Cloud Infrastructure | GCP | Kubernetes | IaC</p>
+    <a href="https://github.com/gustavoh98/gcp-gke-lab">github.com/gustavoh98/gcp-gke-lab</a>
+  </footer>
+</div>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+let w,h,particles=[];
+function init(){w=c.width=window.innerWidth;h=c.height=window.innerHeight;particles=[];for(let i=0;i<80;i++)particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+.5,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,o:Math.random()*.5+.1})}
+function draw(){ctx.clearRect(0,0,w,h);particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(99,102,241,${p.o})`;ctx.fill()});particles.forEach((p,i)=>{particles.slice(i+1).forEach(q=>{const d=Math.hypot(p.x-q.x,p.y-q.y);if(d<120){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle=`rgba(99,102,241,${.15*(1-d/120)})`;ctx.lineWidth=.5;ctx.stroke()}})});requestAnimationFrame(draw)}
+window.addEventListener('resize',init);init();draw();
+</script>
+</body>
+</html>
