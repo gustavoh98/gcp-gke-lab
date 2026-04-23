@@ -1,7 +1,7 @@
 # Projeto (GCP) - GKE Lab
 
 ## O que esse lab faz:
-Provisionamento de um cluster GKE na GCP utilizando Terraform, com VPC dedicada, subnet customizada com ranges secundários para Pods e Services, e node pool configurado.
+Provisionamento de um cluster GKE no GCP utilizando Terraform, com VPC dedicada, subnet customizada com ranges secundários para Pods e Services, e node pool configurado.
 
 ## Arquitetura:
 - VPC customizada com auto_create_subnetworks desativado
